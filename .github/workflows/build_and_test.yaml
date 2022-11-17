@@ -116,13 +116,13 @@ jobs:
     steps:
       - name: Build binary
         run: |
-          CGO_ENABLED=0 GOOS=${{ matrix.arch }} GOARCH=amd64 go build
+          CGO_ENABLED=0 GOOS=${{ matrix.arch }} GOARCH=amd64 go build -x
       
       - name: Upload linux binary
         uses: actions/upload-artifact@v3
         with:
           name: licencias
-          path: ${{ github.workspace }}
+          # path: ${{ github.workspace }}
 
 
 

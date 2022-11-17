@@ -138,7 +138,3 @@ jobs:
           prerelease: false
           tag_name: "latest"
           files: ./${{ matrix.artifact_name }}
-
-
-
-

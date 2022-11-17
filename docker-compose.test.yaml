@@ -1,0 +1,10 @@
+services:
+  app:
+    image: "${TESTING_IMAGE}"
+  test-integration-app:
+    image: "${TESTING_IMAGE}"
+    # run integration test
+    command: curl --fail http://app:80 || exit 1
+    depends_on:
+      app:
+        condition: service_started

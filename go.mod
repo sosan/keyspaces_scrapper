@@ -5,8 +5,8 @@ go 1.19
 require github.com/google/uuid v1.3.0
 
 require (
-	github.com/chromedp/cdproto v0.0.0-20221108233440-fad8339618ab // indirect
-	github.com/chromedp/chromedp v0.8.6 // indirect
+	github.com/chromedp/cdproto v0.0.0-20221114202156-f470c7c7306e // indirect
+	github.com/chromedp/chromedp v0.8.6
 	github.com/chromedp/sysutil v1.0.0 // indirect
 	github.com/gobwas/httphead v0.1.0 // indirect
 	github.com/gobwas/pool v0.2.1 // indirect

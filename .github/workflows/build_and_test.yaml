@@ -108,6 +108,7 @@ jobs:
   
   upload-artifact:
     name: Upload windows, linux artifacts
+    # needs: [scan-image]
     runs-on: ubuntu-22.04
     strategy:
       matrix:

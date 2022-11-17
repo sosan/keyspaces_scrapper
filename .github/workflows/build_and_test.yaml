@@ -112,7 +112,17 @@ jobs:
     runs-on: ubuntu-22.04
     strategy:
       matrix:
-          arch: [linux, windows]
+        arch: [linux, windows]
+        include:
+          - name: linux
+            os: ubuntu-22.04
+            artifact_name: main
+            asset_name: licencias-linux-amd64
+          - name: windows
+            os: ubuntu-22.04
+            artifact_name: main.exe
+            asset_name: licencias-windows-amd64.exe
+
     steps:
       - uses: actions/checkout@v3
 
@@ -120,11 +130,21 @@ jobs:
         run: |
           CGO_ENABLED=0 GOOS=${{ matrix.arch }} GOARCH=amd64 go build -x
       
-      - name: Upload linux binary
-        uses: actions/upload-artifact@v3
+      # - name: Upload linux binary
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: licencias
+      #     path: ${{ github.workspace }}
+
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
         with:
-          name: licencias
-          path: ${{ github.workspace }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ./${{ matrix.artifact_name }}
+          asset_name: ./${{ matrix.asset_name }}
+          tag: ${{ github.ref }}
+          overwrite: true
+          body: "Nueva version"
 
 
 

@@ -107,41 +107,40 @@ jobs:
           exit-code: 0
   
   upload-artifact:
-    name: Upload windows, linux artifacts
+    name: Upload ${{ matrix.arch }} artifacts
     # needs: [scan-image]
     runs-on: ubuntu-22.04
     strategy:
       matrix:
         arch: [linux, windows]
-        include:
-          - name: linux
-            os: ubuntu-22.04
-            artifact_name: main
-            asset_name: licencias-linux-amd64
-          - name: windows
-            os: ubuntu-22.04
-            artifact_name: main.exe
-            asset_name: licencias-windows-amd64.exe
+        artifact_name: [main, main.exe]
+        exclude:
+        - arch: linux
+          artifact_name: main.exe
+        - arch: windows
+          artifact_name: main
+        
+        # include:
+        #   - os: ubuntu-22.04
+        #     artifact_name: main
+        #     asset_name: licencias-linux-amd64
+        #   - os: ubuntu-22.04
+        #     artifact_name: main.exe
+        #     asset_name: licencias-windows-amd64.exe
 
     steps:
       - uses: actions/checkout@v3
 
       - name: Build binary
         run: |
-          CGO_ENABLED=0 GOOS=${{ matrix.arch }} GOARCH=amd64 go build -x
-      
-      # - name: Upload linux binary
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: licencias
-      #     path: ${{ github.workspace }}
+          CGO_ENABLED=0 GOOS=${{ matrix.arch }} GOARCH=amd64 go build
 
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ./${{ matrix.artifact_name }}
-          asset_name: ./${{ matrix.asset_name }}
+          asset_name: ./${{ matrix.arch }}
           tag: ${{ github.ref }}
           overwrite: true
           body: "Nueva version"

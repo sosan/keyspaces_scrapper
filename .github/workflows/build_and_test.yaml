@@ -119,14 +119,6 @@ jobs:
           artifact_name: main.exe
         - arch: windows
           artifact_name: main
-        
-        # include:
-        #   - os: ubuntu-22.04
-        #     artifact_name: main
-        #     asset_name: licencias-linux-amd64
-        #   - os: ubuntu-22.04
-        #     artifact_name: main.exe
-        #     asset_name: licencias-windows-amd64.exe
 
     steps:
       - uses: actions/checkout@v3
@@ -140,7 +132,7 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ./${{ matrix.artifact_name }}
-          asset_name: ./${{ matrix.arch }}
+          asset_name: ./${{ matrix.arch }}.${{ matrix.artifact_name }}
           tag: ${{ github.ref }}
           overwrite: true
           body: "Nueva version"

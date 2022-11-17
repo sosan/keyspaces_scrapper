@@ -110,15 +110,17 @@ jobs:
     name: Upload ${{ matrix.arch }} artifacts
     # needs: [scan-image]
     runs-on: ubuntu-22.04
+    permissions:
+      contents: write
     strategy:
       matrix:
         arch: [linux, windows]
-        artifact_name: [main, main.exe]
+        artifact_name: [licencias, licencias.exe]
         exclude:
         - arch: linux
-          artifact_name: main.exe
+          artifact_name: licencias.exe
         - arch: windows
-          artifact_name: main
+          artifact_name: licencias
 
     steps:
       - uses: actions/checkout@v3
@@ -127,35 +129,21 @@ jobs:
         run: |
           CGO_ENABLED=0 GOOS=${{ matrix.arch }} GOARCH=amd64 go build -o ${{ matrix.artifact_name }}
       
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload binaries to release
+        uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          name: "sjkdf ksdjfks"
+          body: "Nueva version"
           draft: false
           prerelease: false
+          files: ./${{ matrix.artifact_name }}
 
-      - name: Upload Release Asset
-        id: upload-release-asset 
-        uses: Fhwang0926/upload-release-asset@v1.1.8
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_name: ./testing_${{ matrix.artifact_name }}
-          asset_label: latest
-
-      # - name: Upload binaries to release
       #   uses: svenstaro/upload-release-action@v2
       #   with:
       #     repo_token: ${{ secrets.GITHUB_TOKEN }}
       #     file: ./${{ matrix.artifact_name }}
       #     tag: ${{ github.ref }}
       #     overwrite: true
-      #     body: "Nueva version"
 
 
 

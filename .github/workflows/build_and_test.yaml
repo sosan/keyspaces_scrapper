@@ -136,6 +136,7 @@ jobs:
           body: "Nueva version"
           draft: false
           prerelease: false
+          tag_name: "latest"
           files: ./${{ matrix.artifact_name }}
 
       #   uses: svenstaro/upload-release-action@v2

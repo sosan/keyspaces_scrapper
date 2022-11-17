@@ -132,19 +132,13 @@ jobs:
       - name: Upload binaries to release
         uses: softprops/action-gh-release@v1
         with:
-          name: "sjkdf ksdjfks"
+          name: "Release"
           body: "Nueva version"
           draft: false
           prerelease: false
           tag_name: "latest"
           files: ./${{ matrix.artifact_name }}
 
-      #   uses: svenstaro/upload-release-action@v2
-      #   with:
-      #     repo_token: ${{ secrets.GITHUB_TOKEN }}
-      #     file: ./${{ matrix.artifact_name }}
-      #     tag: ${{ github.ref }}
-      #     overwrite: true
 
 
 

@@ -116,6 +116,8 @@ jobs:
     steps:
       - name: Build binary
         run: |
+          pwd
+          ls -lah
           CGO_ENABLED=0 GOOS=${{ matrix.arch }} GOARCH=amd64 go build -x
       
       - name: Upload linux binary

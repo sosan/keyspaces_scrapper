@@ -125,14 +125,14 @@ jobs:
 
       - name: Build binary
         run: |
-          CGO_ENABLED=0 GOOS=${{ matrix.arch }} GOARCH=amd64 go build
+          CGO_ENABLED=0 GOOS=${{ matrix.arch }} GOARCH=amd64 go build -o ${{ matrix.artifact_name }}
 
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ./${{ matrix.artifact_name }}
-          asset_name: ./${{ matrix.arch }}.${{ matrix.artifact_name }}
+          asset_name: ./testing_${{ matrix.artifact_name }}
           tag: ${{ github.ref }}
           overwrite: true
           body: "Nueva version"

@@ -114,6 +114,8 @@ jobs:
       matrix:
           arch: [linux, windows]
     steps:
+      - uses: actions/checkout@v3
+
       - name: Build binary
         run: |
           pwd

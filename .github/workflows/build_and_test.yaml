@@ -128,7 +128,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: licencias
-          # path: ${{ github.workspace }}
+          path: ${{ github.workspace }}
 
 
 

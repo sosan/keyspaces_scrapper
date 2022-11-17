@@ -1,0 +1,6 @@
+.github/
+.vscode/
+.env
+.gitignore
+ejecutar_code.sh
+README.md

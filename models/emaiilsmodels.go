@@ -27,6 +27,7 @@ type PostData struct {
 	ButtonFreeLicense      string
 	ButtonWindows          string
 	ButtonContinue         string
+	ButtonContinueSelectOS string
 	EmailToShare           string
 	ButtonToSendEmailShare string
 	ButtonShowLicense      string

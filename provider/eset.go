@@ -115,13 +115,13 @@ func sendChromeConfirm(email string) (bool, string) {
 		ButtonFreeLicense:      `#license-add-new-slides > div > ion-slide.LicenseForkSlide.md.swiper-slide.swiper-zoom-container.hydrated.swiper-slide-active > div > div > ion-card:nth-child(3)`,
 		ButtonWindows:          `#protect-choose-os-9`,
 		ButtonContinue:         `#license-add-new-slides > div > ion-slide.LicenseForkSlide.md.swiper-slide.swiper-zoom-container.hydrated.swiper-slide-active > div > ion-button`,
+		ButtonContinueSelectOS: `#main-content > div > ion-tabs > div > ion-router-outlet > div > ion-content > div > ion-button`,
 		EmailToShare:           `#main-content > div > ion-tabs > div > ion-router-outlet > div > ion-content > div > ion-row > form > div > div.ion-cui-form-field > ion-item > div > ion-input > input`,
 		ButtonToSendEmailShare: `#main-content > div > ion-tabs > div > ion-router-outlet > div > ion-content > div > ion-row > form > ion-button`,
 		ButtonShowLicense:      `#license-list-large-previews > ion-row > ion-col > ion-card > ion-button`,
 		TextLicense:            `#main-content > div > ion-tabs > div > ion-router-outlet > div > ion-content > div.license-detail-content > ion-grid.license-detail-portal-content.license-detail-portal-content__bottom-grid.md.hydrated > ion-row > ion-col:nth-child(1) > div > ion-card:nth-child(1) > ion-grid > ion-row:nth-child(2) > ion-col:nth-child(6) > div > div > p.DetailInfoSectionItem__value > ion-text`,
 	}
-	// ButtonContinue:         `#main-content > div > ion-tabs > div > ion-router-outlet > div > ion-content > div > ion-button`,
-	// `#license-add-new-slide > form > div.ion-cui-btn-above-link-wrapper > ion-button:nth-child(3)`,
+
 	var buf []byte
 	var licencia string
 	err := chromedp.Run(ctx, submitConfirmAccount(postData, &buf, &licencia))
@@ -160,7 +160,7 @@ func submitConfirmAccount(postData models.PostData, buf *[]byte, licencia *strin
 		chromedp.Sleep(5 * time.Second),
 		chromedp.Click(postData.ButtonWindows, chromedp.ByQuery),
 		chromedp.Sleep(2 * time.Second),
-		chromedp.Click(postData.ButtonContinue, chromedp.ByQuery),
+		chromedp.Click(postData.ButtonContinueSelectOS, chromedp.ByQuery),
 
 		// envio key al email
 		chromedp.SendKeys(postData.EmailToShare, postData.EmailValue, chromedp.ByQuery),

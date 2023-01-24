@@ -61,3 +61,13 @@ type EmailCompleto struct {
 	Subject string `json:"subject"`
 	Text    string `json:"text"`
 }
+
+type Domains struct {
+	Id        string `json:"id"`
+	ReadOnly  bool   `json:"readonly"`
+	Domain    string `json:"domain"`
+	IsActive  bool   `json:"isactive"`
+	IsPrivate bool   `json:"isprivate"`
+	CreatedAt string `json:"createdat"`
+	UpdatedAt string `json:"updatedat"`
+}

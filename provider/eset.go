@@ -64,6 +64,8 @@ func submitRegisterESET(postData models.PostData, buf *[]byte) chromedp.Tasks {
 		chromedp.WaitVisible(postData.WaitVisibleValue),
 		chromedp.Click("#cc-accept", chromedp.NodeVisible),
 		chromedp.SendKeys(postData.EmailElement, postData.EmailValue, chromedp.ByID),
+		chromedp.Submit(postData.SubmitElement, chromedp.BySearch),
+		chromedp.Sleep(5 * time.Second),
 		chromedp.SendKeys(postData.PasswordElement, postData.PasswordValue, chromedp.ByID),
 		chromedp.SendKeys(postData.SelectedCountryElement, postData.SelectedCountryValue, chromedp.ByID),
 		chromedp.SendKeys(postData.WantReceiveNewsElement, postData.WantReceiveNewsValue, chromedp.ByID),

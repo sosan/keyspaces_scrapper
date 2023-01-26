@@ -114,12 +114,12 @@ jobs:
       contents: write
     strategy:
       matrix:
-        arch: [linux, windows]
+        goos: [linux, windows]
         artifact_name: [licencias, licencias.exe]
         exclude:
-        - arch: linux
+        - goos: linux
           artifact_name: licencias.exe
-        - arch: windows
+        - goos: windows
           artifact_name: licencias
 
     steps:
@@ -127,14 +127,30 @@ jobs:
 
       - name: Build binary
         run: |
-          CGO_ENABLED=0 GOOS=${{ matrix.arch }} GOARCH=amd64 go build -o ${{ matrix.artifact_name }}
+          CGO_ENABLED=0 GOOS=${{ matrix.goos }} GOARCH=amd64 go build -o ${{ matrix.artifact_name }}
       
       - name: Upload binaries to release
-        uses: softprops/action-gh-release@v1
+        uses: chux0519/go-release-action@v2.1.0
         with:
-          name: "Release"
-          body: "Nueva version"
-          draft: false
-          prerelease: false
-          tag_name: ${{ github.run_id }} #"latest"
-          files: ./${{ matrix.artifact_name }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          # only needs to set following 2 secrets
+          signify_sec_key: ${{ secrets.SIGNIFY_SEC_KEY }}
+          signify_sec_key_pass: ${{ secrets.SIGNIFY_SEC_KEY_PASS }}
+          md5sum: FALSE
+          signify: TRUE
+          goos: ${{ matrix.goos }}
+          goarch: amd64
+          binary_name: ${{ matrix.artifact_name }}
+          asset_name: ${BINARY_NAME}
+          # extra_files: README.md
+
+
+      # - name: Upload binaries to release
+      #   uses: softprops/action-gh-release@v1
+      #   with:
+      #     name: "Release"
+      #     body: "Nueva version"
+      #     draft: false
+      #     prerelease: false
+      #     tag_name: ${{ github.run_id }} #"latest"
+      #     files: ./${{ matrix.artifact_name }}

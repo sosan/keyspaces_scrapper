@@ -26,7 +26,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and Push to GHCR
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v4
         with:
           file: ./Dockerfile.linux
           push: true
@@ -130,7 +130,7 @@ jobs:
           CGO_ENABLED=0 GOOS=${{ matrix.goos }} GOARCH=amd64 go build -o ${{ matrix.artifact_name }}
       
       - name: Upload binaries to release
-        uses: chux0519/go-release-action@v2.1.0
+        uses: chux0519/go-release-action@v2.5.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           # only needs to set following 2 secrets

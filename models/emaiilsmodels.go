@@ -23,15 +23,16 @@ type PostData struct {
 	SubmitElement          string
 	ScreenshotElement      string
 
-	ButtonHome             string
-	ButtonFreeLicense      string
-	ButtonWindows          string
-	ButtonContinue         string
-	ButtonContinueSelectOS string
-	EmailToShare           string
-	ButtonToSendEmailShare string
-	ButtonShowLicense      string
-	TextLicense            string
+	ButtonHome                string
+	ButtonFreeLicense         string
+	ButtonContinueFreeLicense string
+	ButtonWindows             string
+	ButtonContinue            string
+	ButtonContinueSelectOS    string
+	EmailToShare              string
+	ButtonToSendEmailShare    string
+	ButtonShowLicense         string
+	TextLicense               string
 }
 
 type ResumenEmail struct {

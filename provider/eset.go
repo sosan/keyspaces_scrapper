@@ -115,7 +115,7 @@ func sendChromeConfirm(email string) (bool, string) {
 		ButtonFreeLicense:         `#license-add-new-slides > div > ion-slide.LicenseForkSlide.md.swiper-slide.swiper-zoom-container.hydrated.swiper-slide-active > div > div > ion-card:nth-child(3)`,
 		ButtonContinueFreeLicense: `#license-add-new-slides > div > ion-slide.LicenseForkSlide.md.swiper-slide.swiper-zoom-container.hydrated.swiper-slide-active > div > ion-button`,
 		ButtonWindows:             `#protect-choose-os-9`,
-		ButtonContinueSelectOS:    `#main-content > div > ion-tabs > div > ion-router-outlet > div > ion-content > div.protect-page-container--content > div.protect-page--button-container > ion-button.ion-cui-button.protect-page--continue-button.ion-color.ion-color-secondary.ios.button.button-block.button-solid.ion-activatable.ion-focusable.hydrated.ion-activated`,
+		ButtonContinueSelectOS:    `#main-content > div > ion-tabs > div > ion-router-outlet > div > ion-content > div.protect-page-container--content > div.protect-page--button-container > ion-button.ion-cui-button.protect-page--continue-button.ion-color.ion-color-secondary.ios.button.button-block.button-solid.ion-activatable`, //ion-focusable.hydrated.ion-activated
 		EmailToShare:              `#main-content > div > ion-tabs > div > ion-router-outlet > div > ion-content > div > ion-row > form > div > div.ion-cui-form-field > ion-item > div > ion-input > input`,
 		ButtonToSendEmailShare:    `#main-content > div > ion-tabs > div > ion-router-outlet > div > ion-content > div > ion-row > form > ion-button`,
 		ButtonShowLicense:         `#license-list-large-previews > ion-row > ion-col > ion-card > ion-button`,

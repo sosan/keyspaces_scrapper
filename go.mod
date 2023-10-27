@@ -2,7 +2,7 @@ module main
 
 go 1.19
 
-require github.com/google/uuid v1.3.1
+require github.com/google/uuid v1.4.0
 
 require (
 	github.com/chromedp/cdproto v0.0.0-20230802225258-3cf4e6d46a89 // indirect

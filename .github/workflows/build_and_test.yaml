@@ -145,7 +145,7 @@ jobs:
       #     # extra_files: README.md
       - name: Get the version
         id: get_version
-        run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
+        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
 
       - name: Upload binaries to release
         uses: softprops/action-gh-release@v1

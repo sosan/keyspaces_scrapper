@@ -4,10 +4,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
-	"strings"
 	"main/httpclient"
 	"main/models"
 	"main/utils"
+	"strings"
 )
 
 const (
@@ -111,4 +111,3 @@ func getMailToken(email string, password string) (bool, string) {
 	return true, jsonResponse.Token
 
 }
-

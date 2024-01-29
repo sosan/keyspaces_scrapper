@@ -9,20 +9,18 @@ type Token struct {
 }
 
 type PostData struct {
-	UriValue             string
-	EmailValue           string
-	PasswordValue        string
-	SelectedCountryValue string
-	WantReceiveNewsValue string
-	WaitVisibleValue     string
-
-	EmailElement           string
-	PasswordElement        string
-	SelectedCountryElement string
-	WantReceiveNewsElement string
-	SubmitElement          string
-	ScreenshotElement      string
-
+	UriValue                  string
+	EmailValue                string
+	PasswordValue             string
+	SelectedCountryValue      string
+	WantReceiveNewsValue      string
+	WaitVisibleValue          string
+	EmailElement              string
+	PasswordElement           string
+	SelectedCountryElement    string
+	WantReceiveNewsElement    string
+	SubmitElement             string
+	ScreenshotElement         string
 	ButtonHome                string
 	ButtonFreeLicense         string
 	ButtonContinueFreeLicense string

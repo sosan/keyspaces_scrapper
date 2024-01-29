@@ -9,7 +9,7 @@ import (
 )
 
 func init() {
-
+	utils.LoadEnvs()
 }
 
 func main() {

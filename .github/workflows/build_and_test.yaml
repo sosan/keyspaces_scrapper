@@ -152,5 +152,5 @@ jobs:
           body: "Nueva version"
           draft: false
           prerelease: false
-          tag_name: ${{ github.run_id }} #"latest"
+          # tag_name: "latest" # ${{ github.run_id }}
           files: ./${{ matrix.artifact_name }}

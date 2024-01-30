@@ -130,13 +130,12 @@ jobs:
           CGO_ENABLED=0 GOOS=${{ matrix.goos }} GOARCH=amd64 go build -o ${{ matrix.artifact_name }}
       
       # - name: Upload binaries to release
-      #   uses: chux0519/go-release-action@v2.5.0
+      #   uses: wangyoucao577/go-release-action@v1
       #   with:
       #     github_token: ${{ secrets.GITHUB_TOKEN }}
-      #     # only needs to set following 2 secrets
       #     signify_sec_key: ${{ secrets.SIGNIFY_SEC_KEY }}
       #     signify_sec_key_pass: ${{ secrets.SIGNIFY_SEC_KEY_PASS }}
-      #     md5sum: FALSE
+      #     md5sum: TRUE
       #     signify: TRUE
       #     goos: ${{ matrix.goos }}
       #     goarch: amd64
@@ -145,7 +144,9 @@ jobs:
       #     # extra_files: README.md
       - name: Get the version
         id: get_version
-        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
+        run: |
+          echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
+          echo "$(shasum ./${{ matrix.artifact_name }} | awk '{ print $1 }')" > checksum_${{ matrix.artifact_name }}.txt
       - name: Upload binaries to release
         uses: softprops/action-gh-release@v1
         with:
@@ -154,4 +155,6 @@ jobs:
           draft: false
           prerelease: false
           tag_name:  ${{ steps.get_version.outputs.VERSION }} # ${{ github.run_id }}
-          files: ./${{ matrix.artifact_name }}
+          files: |
+            ./${{ matrix.artifact_name }}
+            ./checksum_${{ matrix.artifact_name }}.txt

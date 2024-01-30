@@ -5,11 +5,16 @@ import (
 	"main/email"
 	"main/httpclient"
 	"main/provider"
+	"main/update"
 	"main/utils"
 )
 
 func init() {
 	utils.LoadEnvs()
+	needUpdate, updatedOk := update.AutoUpdate()
+	if needUpdate && !updatedOk {
+		log.Printf("NECESARIO ACTUALIZAR PERO NO HA SIDO POSIBLE!!")
+	}
 }
 
 func main() {
@@ -62,7 +67,6 @@ func main() {
 		log.Printf("Error al confirmar cuenta")
 		return
 	}
-
 
 	log.Printf("Cuenta confirmada con el correo %s", emailGenerated)
 	log.Printf("Obteniendo licencia para %s", emailGenerated)

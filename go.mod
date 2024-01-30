@@ -2,12 +2,14 @@ module main
 
 go 1.21
 
-require github.com/google/uuid v1.6.0
+require (
+	github.com/google/uuid v1.6.0
+	github.com/joho/godotenv v1.5.1
+)
 
 require (
 	aead.dev/minisign v0.2.0 // indirect
-	github.com/joho/godotenv v1.5.1 // indirect
-	golang.org/x/crypto v0.0.0-20211209193657-4570a0811e8b // indirect
+	golang.org/x/crypto v0.17.0 // indirect
 )
 
 require (

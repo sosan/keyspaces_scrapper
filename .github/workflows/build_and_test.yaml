@@ -138,7 +138,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           ls
-          gh release create latest ./${{ matrix.artifact_name }} --clobber
+          gh release create latest ./${{ matrix.artifact_name }} --latest --generate-notes --title "Release"
 
         # uses: softprops/action-gh-release@v1
         # with:

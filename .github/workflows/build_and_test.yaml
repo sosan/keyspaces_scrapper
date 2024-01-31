@@ -128,16 +128,16 @@ jobs:
       - name: Build binary
         run: |
           CGO_ENABLED=0 GOOS=${{ matrix.goos }} GOARCH=amd64 go build -o ${{ matrix.artifact_name }}
-      - name: Get the version
-        id: get_version
-        run: |
-          echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
-          echo "$(shasum ./${{ matrix.artifact_name }} | awk '{ print $1 }')" > checksum_${{ matrix.artifact_name }}.txt
+      # - name: Get the version
+      #   id: get_version
+      #   run: |
+      #     echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
+      #     echo "$(shasum ./${{ matrix.artifact_name }} | awk '{ print $1 }')" > checksum_${{ matrix.artifact_name }}.txt
       - name: Upload binaries to release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release create ${{ github.run_id }} ./${{ matrix.artifact_name }} --latest --generate-notes --title "Release"
+          gh release upload ${{ github.run_id }} ./${{ matrix.artifact_name }} --latest --generate-notes --title "Release"
 
         # uses: softprops/action-gh-release@v1
         # with:

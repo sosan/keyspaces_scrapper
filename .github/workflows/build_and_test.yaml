@@ -137,7 +137,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release create ${{ steps.get_version.outputs.VERSION }} ./${{ matrix.artifact_name }} --latest --generate-notes --title "Release"
+          gh release create ${{ github.run_id }} ./${{ matrix.artifact_name }} --latest --generate-notes --title "Release"
 
         # uses: softprops/action-gh-release@v1
         # with:

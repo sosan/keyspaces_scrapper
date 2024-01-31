@@ -133,19 +133,19 @@ jobs:
       #   run: |
       #     echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
       #     echo "$(shasum ./${{ matrix.artifact_name }} | awk '{ print $1 }')" > checksum_${{ matrix.artifact_name }}.txt
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   run: |
+      #     gh release upload ${{ github.run_id }} ./${{ matrix.artifact_name }} --clobber
+      #   # gh release create ${{ github.run_id }} ./${{ matrix.artifact_name }} --latest --generate-notes --title "Release"
       - name: Upload binaries to release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh release upload ${{ github.run_id }} ./${{ matrix.artifact_name }} --clobber
-        # gh release create ${{ github.run_id }} ./${{ matrix.artifact_name }} --latest --generate-notes --title "Release"
-        # uses: softprops/action-gh-release@v1
-        # with:
-        #   name: "Release"
-        #   body: "Nueva version"
-        #   draft: false
-        #   prerelease: false
-        #   tag_name: latest # ${{ steps.get_version.outputs.VERSION }} # ${{ github.run_id }}
-        #   files: |
-        #     ./${{ matrix.artifact_name }}
-        #     ./checksum_${{ matrix.artifact_name }}.txt
+        uses: softprops/action-gh-release@v1
+        with:
+          name: "Release"
+          body: "Nueva version"
+          draft: false
+          prerelease: false
+          tag_name: latest # ${{ steps.get_version.outputs.VERSION }} # ${{ github.run_id }}
+          files: |
+            ./${{ matrix.artifact_name }}
+            ./checksum_${{ matrix.artifact_name }}.txt

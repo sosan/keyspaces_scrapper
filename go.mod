@@ -7,9 +7,9 @@ require (
 	github.com/joho/godotenv v1.5.1
 )
 
-require github.com/kardianos/osext v0.0.0-20190222173326-2bc1f35cddc0 // indirect
-
 require github.com/mouuff/go-rocket-update v1.5.4
+
+require github.com/kardianos/osext v0.0.0-20190222173326-2bc1f35cddc0 // indirect
 
 require (
 	github.com/chromedp/cdproto v0.0.0-20240127002248-bd7a66284627 // indirect

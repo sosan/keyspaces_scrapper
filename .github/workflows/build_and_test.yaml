@@ -127,8 +127,8 @@ jobs:
 
       - name: Build binary
         run: |
-          CGO_ENABLED=0 GOOS=${{ matrix.goos }} GOARCH=amd64 go build -o ${{ matrix.artifact_name }}
-          gzip -c ${{ matrix.artifact_name }} > ${{ matrix.artifact_name }}.zip
+          CGO_ENABLED=0 GOOS=${{ matrix.goos }} GOARCH=amd64 go build -o ${{ matrix.artifact_name }} &&
+          zip ${{ matrix.artifact_name }} > ${{ matrix.artifact_name }}.zip
 
       - name: Upload binaries to release
         uses: softprops/action-gh-release@v1

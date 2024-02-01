@@ -7,10 +7,9 @@ require (
 	github.com/joho/godotenv v1.5.1
 )
 
-require (
-	aead.dev/minisign v0.2.0 // indirect
-	golang.org/x/crypto v0.17.0 // indirect
-)
+require github.com/kardianos/osext v0.0.0-20190222173326-2bc1f35cddc0 // indirect
+
+require github.com/mouuff/go-rocket-update v1.5.4
 
 require (
 	github.com/chromedp/cdproto v0.0.0-20240127002248-bd7a66284627 // indirect
@@ -21,6 +20,5 @@ require (
 	github.com/gobwas/ws v1.3.2 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
-	github.com/minio/selfupdate v0.6.0
 	golang.org/x/sys v0.16.0 // indirect
 )

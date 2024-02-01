@@ -127,9 +127,11 @@ jobs:
 
       - name: Build binary
         run: |
+          go install github.com/sanbornm/go-selfupdate/cmd/go-selfupdate@latest
           CGO_ENABLED=0 GOOS=${{ matrix.goos }} GOARCH=amd64 go build -o ${{ matrix.artifact_name }}
-          zip ${{ matrix.artifact_name }} > ${{ matrix.artifact_name }}.zip
-
+          go-selfupdate -o public/licencias/ ${{ matrix.artifact_name }} 1
+          
+          
       - name: Upload binaries to release
         uses: softprops/action-gh-release@v1
         with:

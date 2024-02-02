@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"main/email"
 	"main/httpclient"
@@ -10,6 +11,7 @@ import (
 )
 
 func init() {
+	fmt.Println(update.GetVersionBuild())
 	utils.LoadEnvs()
 	needUpdate, updatedOk := update.AutoUpdate()
 	if needUpdate && !updatedOk {

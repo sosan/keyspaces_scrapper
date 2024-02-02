@@ -124,18 +124,15 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+      - id: buildbinary
       - name: Build binary
         run: |
-          CGO_ENABLED=0 GOOS=${{ matrix.goos }} GOARCH=amd64 go build -o ${{ matrix.artifact_name }}
-      - name: Generate checksum
-        uses: jmgilman/actions-generate-checksum@v1
-        with:
-          output: checksum_${{ matrix.artifact_name }}.txt
-          patterns: |
-            ${{ matrix.artifact_name }}
+          export VERSION_BUILD=${date}
+          echo ${VERSION_BUILD} > date_build_${{ matrix.artifact_name }}.txt
+          CGO_ENABLED=0 GOOS=${{ matrix.goos }} GOARCH=amd64 go build -ldflags="-X 'main/update.VersionBuild=${VERSION_BUILD}'" -o ${{ matrix.artifact_name }}
       - name: cat 
         run: |
-          cat checksum_${{ matrix.artifact_name }}.txt
+          cat date_build_${{ matrix.artifact_name }}.txt
       - name: Upload binaries to release
         uses: softprops/action-gh-release@v1
         with:
@@ -146,6 +143,7 @@ jobs:
           tag_name: latest
           files: |
             ./${{ matrix.artifact_name }}
-            checksum_${{ matrix.artifact_name }}.txt
+            date_build_${{ matrix.artifact_name }}.txt
 
 # shasum -a 256 ${{ matrix.artifact_name }} | cut -d' ' -f1 > checksum_${{ matrix.artifact_name }}.txt
+#echo "VERSION_BUILD=${date}" >> "$GITHUB_OUTPUT"

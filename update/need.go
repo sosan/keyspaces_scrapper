@@ -2,43 +2,37 @@ package update
 
 import (
 	"fmt"
-	"log"
-	"main/calculatehash"
 	"main/httpclient"
 	"strings"
 )
 
 func getNeedUpdate() bool {
-	fileName := getFileName()
-	selfCheckSum := calculatehash.CalculateSha256Checksum(fileName)
-	log.Print(selfCheckSum)
-	remoteChecksum := getRemoteChecksum()
+	selfVersion := GetVersionBuild()
+	remoteVersion := getRemoteVersionBuild()
 
-	return remoteChecksum != selfCheckSum
+	return remoteVersion != selfVersion
 }
 
-
-
-func getRemoteChecksum() string {
-	uri := getRemotePathChecksum()
-	byteChecksum, statusCode := httpclient.GetRequest(uri, "")
+func getRemoteVersionBuild() string {
+	uri := getRemotePathBuildDate()
+	versionDate, statusCode := httpclient.GetRequest(uri, "")
 	if statusCode != 200 {
 		return ""
 	}
-	remoteChecksum := cleanRawChecksum(string(byteChecksum))
-	
-	return remoteChecksum
+	remoteVersionBuild := cleanRawDate(string(versionDate))
+
+	return remoteVersionBuild
 }
 
-func cleanRawChecksum(checksumRaw string) string {
-	splitedChecksum := strings.Split(checksumRaw, "\n")
-	if len(splitedChecksum) == 0 {
+func cleanRawDate(dateRaw string) string {
+	splitted := strings.Split(dateRaw, "\n")
+	if len(splitted) == 0 {
 		return ""
 	}
-	return splitedChecksum[0]
+	return splitted[0]
 }
 
-func getRemotePathChecksum() string {
+func getRemotePathBuildDate() string {
 	fileName := getFileName()
-	return fmt.Sprintf("%s/checksum_%s.txt", URI_DOWNLOAD, fileName)
+	return fmt.Sprintf("%s/date_build_%s.txt", URI_DOWNLOAD, fileName)
 }

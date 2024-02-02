@@ -28,7 +28,7 @@ func Test_cleanRawChecksum(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := cleanRawChecksum(tt.args.checksumRaw); got != tt.want {
+			if got := cleanRawDate(tt.args.checksumRaw); got != tt.want {
 				t.Errorf("cleanRawChecksum() = %v, want %v", got, tt.want)
 			}
 		})

@@ -50,7 +50,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Unit Testing in Docker
-        run: docker run --rm ghcr.io/${{ github.actor }}/${{ github.event.repository.name }}:"$GITHUB_RUN_ID" echo "lanzar comando para test npm run tests"
+        run: docker run --rm ghcr.io/${{ github.actor }}/${{ github.event.repository.name }}:${{ github.run_id }} echo "lanzar comando para test npm run tests"
 
   test-integration:
     name: Integration tests in Compose
@@ -72,9 +72,9 @@ jobs:
       # solo testing de healthcheck
       - name: Test healthcheck in Docker Compose
         run: |
-          export TESTING_IMAGE=ghcr.io/${{ github.actor }}/${{ github.event.repository.name }}:"$GITHUB_RUN_ID"
-          echo Testing image: "$TESTING_IMAGE"
-          echo docker compose -f docker-compose.test.yml up --exit-code-from test-integration-app
+          export TESTING_IMAGE=ghcr.io/${{ github.actor }}/${{ github.event.repository.name }}:${{ github.run_id }}
+          echo 'Testing image: "$TESTING_IMAGE"'
+          echo 'docker compose -f docker-compose.test.yml up --exit-code-from test-integration-app'
 
   scan-image:
     name: Scan Image with Trivy
@@ -97,7 +97,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Pull image to scan
-        run: docker pull ghcr.io/${{ github.actor }}/${{ github.event.repository.name }}:"$GITHUB_RUN_ID"
+        run: docker pull ghcr.io/${{ github.actor }}/${{ github.event.repository.name }}:${{ github.run_id }}
         
       - name: Run Trivy for all CVEs
         uses: aquasecurity/trivy-action@master

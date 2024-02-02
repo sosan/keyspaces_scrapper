@@ -57,14 +57,15 @@ func doUpdate(url string) error {
 	body, statusCode := httpclient.GetRequestRaw(url, "")
 
     if statusCode != 200 {
-		log.Fatalf("ERROR | No es posible conectarse")
+		log.Fatalf("ERROR | Status code es diferente a 200")
 		return nil
     }
     err := selfupdate.Apply(*body, selfupdate.Options{})
     if err != nil {
         // error handling
-		if rerr := selfupdate.RollbackError(err); rerr != nil {
-			fmt.Printf("NO SE HA PODIDO ACTUALIZAR: %v", rerr)
+		rerr := selfupdate.RollbackError(err)
+		if rerr != nil {
+			fmt.Printf("ERROR | NO SE HA PODIDO ACTUALIZAR: %v", rerr)
 		}
     }
 	defer (*body).Close()

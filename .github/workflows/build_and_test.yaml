@@ -49,8 +49,9 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       
-      - name: Unit Testing in Docker
-        run: docker run --rm ghcr.io/${{ github.actor }}/${{ github.event.repository.name }}:${{ github.run_id }} echo "lanzar comando para test npm run tests"
+      - name: Unit Testing
+        run: |
+          go test update/need_test.go update/need.go update/auto.go update/version.go
 
   test-integration:
     name: Integration tests in Compose
@@ -143,4 +144,5 @@ jobs:
             date_build_${{ matrix.artifact_name }}.txt
 
 # shasum -a 256 ${{ matrix.artifact_name }} | cut -d' ' -f1 > checksum_${{ matrix.artifact_name }}.txt
-#echo "VERSION_BUILD=${date}" >> "$GITHUB_OUTPUT"
+# echo "VERSION_BUILD=${date}" >> "$GITHUB_OUTPUT"
+# docker run --rm ghcr.io/${{ github.actor }}/${{ github.event.repository.name }}:${{ github.run_id }} echo "lanzar comando para test npm run tests"

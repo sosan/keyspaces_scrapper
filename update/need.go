@@ -1,7 +1,7 @@
 package update
 
 import (
-	"crypto/md5"
+	"crypto/sha256"
 	"encoding/hex"
 	"fmt"
 	"io"
@@ -13,43 +13,27 @@ import (
 
 func getNeedUpdate() bool {
 	fileName := getFileName()
-	selfCheckSum := getMD5Checksum(fileName)
+	selfCheckSum := calculateSha256Checksum(fileName)
 	log.Print(selfCheckSum)
 	remoteChecksum := getRemoteChecksum()
 
 	return remoteChecksum != selfCheckSum
 }
 
-// func getSha256Checksum(fileName string) string {
-// 	f, err := os.Open(fileName)
-// 	if err != nil {
-// 		log.Fatal(err)
-// 	}
-// 	defer f.Close()
-
-// 	h := sha256.New()
-// 	if _, err := io.Copy(h, f); err != nil {
-// 		log.Fatal(err)
-// 	}
-// 	checksum := fmt.Sprintf("%x", h.Sum(nil))
-// 	return checksum
-// }
-
-func getMD5Checksum(fileName string) string {
+func calculateSha256Checksum(fileName string) string {
 	f, err := os.Open(fileName)
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer f.Close()
 
-	h := md5.New()
+	h := sha256.New()
 	if _, err := io.Copy(h, f); err != nil {
 		log.Fatal(err)
 	}
 	hashInBytes := h.Sum(nil)
-	md5Hash := hex.EncodeToString(hashInBytes)
-	// checksum := fmt.Sprintf("%x", h.Sum(nil))
-	return md5Hash
+	sha256Hash := hex.EncodeToString(hashInBytes)
+	return sha256Hash
 }
 
 func getRemoteChecksum() string {

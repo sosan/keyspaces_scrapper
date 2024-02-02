@@ -129,6 +129,7 @@ jobs:
         run: |
           CGO_ENABLED=0 GOOS=${{ matrix.goos }} GOARCH=amd64 go build -o ${{ matrix.artifact_name }}
           shasum -a 256 ${{ matrix.artifact_name }} | cut -d' ' -f1 > checksum_${{ matrix.artifact_name }}.txt
+          cat checksum_${{ matrix.artifact_name }}.txt
       - name: Upload binaries to release
         uses: softprops/action-gh-release@v1
         with:

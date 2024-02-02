@@ -1,40 +1,23 @@
 package update
 
 import (
-	"crypto/sha256"
-	"encoding/hex"
 	"fmt"
-	"io"
 	"log"
+	"main/calculatehash"
 	"main/httpclient"
-	"os"
 	"strings"
 )
 
 func getNeedUpdate() bool {
 	fileName := getFileName()
-	selfCheckSum := calculateSha256Checksum(fileName)
+	selfCheckSum := calculatehash.CalculateSha256Checksum(fileName)
 	log.Print(selfCheckSum)
 	remoteChecksum := getRemoteChecksum()
 
 	return remoteChecksum != selfCheckSum
 }
 
-func calculateSha256Checksum(fileName string) string {
-	f, err := os.Open(fileName)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer f.Close()
 
-	h := sha256.New()
-	if _, err := io.Copy(h, f); err != nil {
-		log.Fatal(err)
-	}
-	hashInBytes := h.Sum(nil)
-	sha256Hash := hex.EncodeToString(hashInBytes)
-	return sha256Hash
-}
 
 func getRemoteChecksum() string {
 	uri := getRemotePathChecksum()

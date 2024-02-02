@@ -130,9 +130,6 @@ jobs:
           export VERSION_BUILD=${date}
           echo ${VERSION_BUILD} > date_build_${{ matrix.artifact_name }}.txt
           CGO_ENABLED=0 GOOS=${{ matrix.goos }} GOARCH=amd64 go build -ldflags="-X 'main/update.VersionBuild=${VERSION_BUILD}'" -o ${{ matrix.artifact_name }}
-      - name: cat 
-        run: |
-          cat date_build_${{ matrix.artifact_name }}.txt
       - name: Upload binaries to release
         uses: softprops/action-gh-release@v1
         with:

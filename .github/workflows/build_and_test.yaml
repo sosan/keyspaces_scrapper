@@ -130,6 +130,7 @@ jobs:
       - name: Generate checksum
         uses: jmgilman/actions-generate-checksum@v1
         with:
+          output: checksum_${{ matrix.artifact_name }}.txt
           patterns: |
             ${{ matrix.artifact_name }}
       - name: cat 

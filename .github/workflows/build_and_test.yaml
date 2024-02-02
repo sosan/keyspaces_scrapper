@@ -128,7 +128,7 @@ jobs:
       - name: Build binary
         run: |
           CGO_ENABLED=0 GOOS=${{ matrix.goos }} GOARCH=amd64 go build -o ${{ matrix.artifact_name }}
-          
+          shasum -a 256 ${{ matrix.artifact_name }} | cut -d' ' -f1 > checksum_${{ matrix.artifact_name }}.txt
       - name: Upload binaries to release
         uses: softprops/action-gh-release@v1
         with:
@@ -139,7 +139,4 @@ jobs:
           tag_name: latest
           files: |
             ./${{ matrix.artifact_name }}
-
-          # # go install github.com/sanbornm/go-selfupdate/cmd/go-selfupdate@latest
-          # go-selfupdate -o public/licencias/ ${{ matrix.artifact_name }} 1
-          
+            checksum_${{ matrix.artifact_name }}.txt

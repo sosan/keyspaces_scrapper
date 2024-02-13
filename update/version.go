@@ -8,7 +8,7 @@ import (
 var VersionBuild string
 
 const (
-	LAYOUT_TIMESTAMP = "2006-01-02T15:04:05"
+	LAYOUT_TIMESTAMP = "2006-01-02T15:04:05Z"
 )
 
 func GetVersionBuild() time.Time {

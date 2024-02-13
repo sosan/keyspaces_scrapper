@@ -4,23 +4,24 @@ import (
 	"fmt"
 	"main/httpclient"
 	"strings"
+	"time"
 )
 
 func getNeedUpdate() bool {
 	selfVersion := GetVersionBuild()
 	remoteVersion := getRemoteVersionBuild()
 
-	return remoteVersion != selfVersion
+	return remoteVersion.After(selfVersion)
 }
 
-func getRemoteVersionBuild() string {
+func getRemoteVersionBuild() time.Time {
 	uri := getRemotePathBuildDate()
 	versionDate, statusCode := httpclient.GetRequest(uri, "")
 	if statusCode != 200 {
-		return ""
+		versionDate = []byte("")
 	}
-	remoteVersionBuild := cleanRawDate(string(versionDate))
-
+	strVersion := cleanRawDate(string(versionDate))
+	remoteVersionBuild := TransformStringDatetoTime(strVersion)
 	return remoteVersionBuild
 }
 

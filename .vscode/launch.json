@@ -1,0 +1,37 @@
+{
+    "configurations": [
+    {
+        "name": "Launch file",
+        "type": "go",
+        "request": "launch",
+        "mode": "debug",
+        "program": "main.go",
+        "buildFlags": [
+            // "-ldflags='-X 'main/update.VersionBuild=${input:shortDate}''"
+            "-ldflags='-X 'main/update.VersionBuild=2024-02-1T19:18:43Z''"
+            
+        ],
+    }   
+    ],
+    "inputs": [
+        {
+            "id": "shortDate",
+            "type": "command",
+            "command": "extension.commandvariable.dateTime",
+            "args": {
+            "locale": "es-ES",
+            "options": {
+                "weekday": "long",
+                "year": "numeric",
+                "month": "2-digit",
+                "day": "2-digit",
+                "hour12": false,
+                "hour": "2-digit",
+                "minute": "2-digit",
+                "second": "2-digit"
+            },
+            "template": "${year}-${month}-${day}T${hour}:${minute}:${second}"
+            }
+        }
+    ]
+}

@@ -1,22 +1,25 @@
 package main
 
 import (
-	// "fmt"
+	"fmt"
 	"log"
 	"main/email"
 	"main/httpclient"
 	"main/provider"
-	// "main/update"
+	"main/update"
 	"main/utils"
 )
 
 func init() {
-	// fmt.Println(update.GetVersionBuild())
-	// utils.LoadEnvs()
-	// needUpdate, updatedOk := update.AutoUpdate()
-	// if needUpdate && !updatedOk {
-	// 	log.Printf("NECESARIO ACTUALIZAR PERO NO HA SIDO POSIBLE!!")
-	// }
+	fmt.Println(update.GetVersionBuild())
+	utils.LoadEnvs()
+	if utils.GetEnv("DEBUG") == "true" {
+		return
+	}
+	needUpdate, updatedOk := update.AutoUpdate()
+	if needUpdate && !updatedOk {
+		log.Printf("NECESARIO ACTUALIZAR PERO NO HA SIDO POSIBLE!!")
+	}
 }
 
 func main() {

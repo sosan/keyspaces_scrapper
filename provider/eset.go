@@ -128,21 +128,15 @@ func sendChromeConfirm(email string) (bool, string) {
 		PasswordElement:           "#password",
 		PasswordValue:             PASSWORD_DEFAULT,
 		SubmitElement:             `button[type="submit"]`,
-		ButtonHome: `#main-content > div > div > div > ion-content > div.home-overview-section > div.home-overview-section__cards-wrap > ion-card > ion-button`,
-		ButtonFreeLicense:         `#license-add-new-slides > div > ion-slide.LicenseForkSlide.md.swiper-slide.swiper-zoom-container.hydrated.swiper-slide-active > div > div > ion-card:nth-child(3)`,
+		ButtonHome:                `#main-content > div > div > div > ion-content > div.home-overview-section > div.home-overview-section__cards-wrap > div > div > div > ion-button`,
+		ButtonFreeLicense:         `#license-add-new-slides > div > ion-slide.LicenseForkSlide.md.swiper-slide.swiper-zoom-container.hydrated.swiper-slide-active > div > div > div:nth-child(3) > div > button`,
 		ButtonContinueFreeLicense: `#license-add-new-slides > div > ion-slide.LicenseForkSlide.md.swiper-slide.swiper-zoom-container.hydrated.swiper-slide-active > div > ion-button`,
 		ButtonWindows:             `#protect-choose-os-9`,
-		
 		ButtonContinueSelectOS:    `#main-content > div > div > div > ion-content > div.protect-page-container--content > div.protect-page--button-container > ion-button.ion-cui-button.protect-page--continue-button.ion-color.ion-color-secondary.ios.button.button-block.button-solid.ion-activatable`,
-		
 		EmailToShare:              `#main-content > div > div > div > ion-content > div.protect-page-container--content.ProtectGetInstaller__content > ion-row > form > div > div.ion-cui-form-field > ion-item > div > ion-input > input`,
-		
-		// `#main-content > div > ion-tabs > div > ion-router-outlet > div > ion-content > div > ion-row > form > div > div.ion-cui-form-field > ion-item > div > ion-input > input`,
 		ButtonToSendEmailShare:    `#main-content > div > div > div > ion-content > div.protect-page-container--content.ProtectGetInstaller__content > ion-row > form > ion-button`,
-		// `#main-content > div > ion-tabs > div > ion-router-outlet > div > ion-content > div > ion-row > form > ion-button`,
-		ButtonShowLicense:         `#license-list-large-previews > ion-row > ion-col > ion-card > ion-button`,
-		TextLicense:               `#main-content > div > div > div > ion-content > div.license-detail-content > ion-grid.license-detail-portal-content.license-detail-portal-content__bottom-grid.md.hydrated > ion-row > ion-col:nth-child(1) > div > ion-card > ion-grid:nth-child(1) > ion-row:nth-child(2) > ion-col:nth-child(6) > div > p.DetailInfoSectionItem__value > ion-text`,
-		// `#main-content > div > ion-tabs > div > ion-router-outlet > div > ion-content > div.license-detail-content > ion-grid.license-detail-portal-content.license-detail-portal-content__bottom-grid.md.hydrated > ion-row > ion-col:nth-child(1) > div > ion-card > ion-grid:nth-child(1) > ion-row:nth-child(2) > ion-col:nth-child(6) > div > p.DetailInfoSectionItem__value > ion-text`,
+		ButtonShowLicense:         `#main-content > div > div > div > ion-content > div > div > div > div.license-preview_link-btn > button`,
+		TextLicense:               `#main-content > div > div > div > ion-content > div.license-detail-content > ion-grid.license-detail-portal-content.license-detail-portal-content__bottom-grid.md.hydrated > ion-row > ion-col:nth-child(1) > div > div > div > div > ion-grid:nth-child(1) > ion-row:nth-child(2) > ion-col:nth-child(6) > div > div.DetailInfoSectionItem__value > p`,
 	}
 
 	var buf []byte
@@ -171,19 +165,19 @@ func submitConfirmAccount(postData models.PostData, buf *[]byte, licencia *strin
 		chromedp.WaitVisible(postData.ButtonHome, chromedp.ByQuery),
 
 		// pagina principal y click en el boton en medio
-		chromedp.Sleep(10 * time.Second),
+		chromedp.Sleep(2 * time.Second),
 		chromedp.Click(postData.ButtonHome, chromedp.ByQuery),
-		chromedp.Sleep(10 * time.Second),
+		chromedp.Sleep(2 * time.Second),
 
 		// seleccionar boton prueba gratuita y continuar
 		chromedp.Click(postData.ButtonFreeLicense, chromedp.ByQuery),
-		chromedp.Sleep(5 * time.Second),
+		chromedp.Sleep(1 * time.Second),
 		chromedp.Click(postData.ButtonContinueFreeLicense, chromedp.ByQuery),
-		chromedp.Sleep(5 * time.Second),
+		chromedp.Sleep(1 * time.Second),
 
 		// seleccion windows y continue
 		chromedp.Click(postData.ButtonWindows, chromedp.ByQuery),
-		chromedp.Sleep(10 * time.Second),
+		chromedp.Sleep(3 * time.Second),
 		chromedp.Click(postData.ButtonContinueSelectOS, chromedp.ByQuery),
 
 		// envio key al email
@@ -191,11 +185,11 @@ func submitConfirmAccount(postData models.PostData, buf *[]byte, licencia *strin
 		chromedp.Click(postData.ButtonToSendEmailShare, chromedp.ByQuery),
 
 		// cortesia a esperar que recibimos el correo
-		chromedp.Sleep(60 * time.Second),
+		chromedp.Sleep(10 * time.Second),
 
 		// ir licencias
-		chromedp.Navigate("https://home.eset.com/licenses"),
-		chromedp.Sleep(5 * time.Second),
+		chromedp.Navigate("https://home.eset.com/subscriptions"), //  https://home.eset.com/licenses
+		chromedp.Sleep(1 * time.Second),
 
 		chromedp.Click(postData.ButtonShowLicense, chromedp.ByQuery),
 		chromedp.Text(postData.TextLicense, licencia, chromedp.ByQuery),

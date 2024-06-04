@@ -128,14 +128,14 @@ func sendChromeConfirm(email string) (bool, string) {
 		PasswordElement:           "#password",
 		PasswordValue:             PASSWORD_DEFAULT,
 		SubmitElement:             `button[type="submit"]`,
-		ButtonHome:                `#main-content > div > div > div > ion-content > div.home-overview-section > div.home-overview-section__cards-wrap > div > div > div > ion-button`,
+		ButtonHome:                `[data-label="home-overview-empty-add-license-btn"]`,
 		ButtonFreeLicense:         `#license-add-new-slides > div > ion-slide.LicenseForkSlide.md.swiper-slide.swiper-zoom-container.hydrated.swiper-slide-active > div > div > div:nth-child(3) > div > button`,
-		ButtonContinueFreeLicense: `#license-add-new-slides > div > ion-slide.LicenseForkSlide.md.swiper-slide.swiper-zoom-container.hydrated.swiper-slide-active > div > ion-button`,
+		ButtonContinueFreeLicense: `[data-label="license-fork-slide-continue-button"]`,
 		ButtonWindows:             `#protect-choose-os-9`,
-		ButtonContinueSelectOS:    `#main-content > div > div > div > ion-content > div.protect-page-container--content > div.protect-page--button-container > ion-button.ion-cui-button.protect-page--continue-button.ion-color.ion-color-secondary.ios.button.button-block.button-solid.ion-activatable`,
-		EmailToShare:              `#main-content > div > div > div > ion-content > div.protect-page-container--content.ProtectGetInstaller__content > ion-row > form > div > div.ion-cui-form-field > ion-item > div > ion-input > input`,
-		ButtonToSendEmailShare:    `#main-content > div > div > div > ion-content > div.protect-page-container--content.ProtectGetInstaller__content > ion-row > form > ion-button`,
-		ButtonShowLicense:         `#main-content > div > div > div > ion-content > div > div > div > div.license-preview_link-btn > button`,
+		ButtonContinueSelectOS:    `[data-label="device-protect-choose-platform-continue-btn"]`,
+		EmailToShare:              `[data-label="device-protect-get-installer-email-input-input"]`,
+		ButtonToSendEmailShare:    `[data-label="device-protect-get-installer-send-email-btn"]`,
+		ButtonShowLicense:         `[data-label="license-list-open-detail-page-btn"]`,
 		TextLicense:               `#main-content > div > div > div > ion-content > div.license-detail-content > ion-grid.license-detail-portal-content.license-detail-portal-content__bottom-grid.md.hydrated > ion-row > ion-col:nth-child(1) > div > div > div > div > ion-grid:nth-child(1) > ion-row:nth-child(2) > ion-col:nth-child(6) > div > div.DetailInfoSectionItem__value > p`,
 	}
 
@@ -162,11 +162,11 @@ func submitConfirmAccount(postData models.PostData, buf *[]byte, licencia *strin
 		chromedp.SendKeys(postData.PasswordElement, postData.PasswordValue, chromedp.ByID),
 		chromedp.Click("cc-accept", chromedp.ByID),
 		chromedp.Click(postData.SubmitElement, chromedp.BySearch),
-		chromedp.WaitVisible(postData.ButtonHome, chromedp.ByQuery),
+		chromedp.WaitVisible(postData.ButtonHome, chromedp.BySearch),
 
 		// pagina principal y click en el boton en medio
 		chromedp.Sleep(2 * time.Second),
-		chromedp.Click(postData.ButtonHome, chromedp.ByQuery),
+		chromedp.Click(postData.ButtonHome, chromedp.BySearch),
 		chromedp.Sleep(2 * time.Second),
 
 		// seleccionar boton prueba gratuita y continuar

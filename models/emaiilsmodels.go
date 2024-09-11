@@ -21,10 +21,15 @@ type PostData struct {
 	WantReceiveNewsElement    string
 	SubmitElement             string
 	ScreenshotElement         string
+	ButtonStart               string
+	ButtonTrial               string
+	ButtonTrialContinue       string
 	ButtonHome                string
+	ButtonHomeContinue        string
 	ButtonFreeLicense         string
 	ButtonContinueFreeLicense string
-	ButtonWindows             string
+	ButtonDetails             string
+	ButtonDetailsContinue string
 	ButtonContinue            string
 	ButtonContinueSelectOS    string
 	EmailToShare              string

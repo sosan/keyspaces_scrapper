@@ -46,7 +46,7 @@ func main() {
 		return
 	}
 
-	if len(emails) != 1 {
+	if len(emails) < 1 {
 		return
 	}
 

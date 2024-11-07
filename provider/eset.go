@@ -130,7 +130,7 @@ func sendChromeConfirm(email string) (bool, string) {
 		ButtonTrial:               `[data-label="license-fork-slide-trial-license-card-button"]`,
 		ButtonTrialContinue:       `[data-label="license-fork-slide-continue-button"]`,
 		ButtonHome:                `[data-label="subscription-choose-trial-ehsp-card-button"]`,
-		ButtonHomeContinue:        `document.querySelector("#main-content > div > div > div > ion-content > div > div > div > div > div > div > div > button")`,
+		ButtonHomeContinue:        `document.querySelector("#main-content > div > div > div > ion-content > div > div > div > div > div > div > div > div > button")`,
 		ButtonFreeLicense:         `#license-add-new-slides > div > ion-slide.LicenseForkSlide.md.swiper-slide.swiper-zoom-container.hydrated.swiper-slide-active > div > div > div:nth-child(3) > div > button`,
 		ButtonContinueFreeLicense: `[data-label="license-fork-slide-continue-button"]`,
 		ButtonDetails:             `[data-label="subscription-choose-trial-esbs-card-button"]`,
@@ -139,7 +139,7 @@ func sendChromeConfirm(email string) (bool, string) {
 		EmailToShare:              `[data-label="device-protect-get-installer-email-input-input"]`,
 		ButtonToSendEmailShare:    `[data-label="device-protect-get-installer-send-email-btn"]`,
 		ButtonShowLicense:         `[data-label="license-list-open-detail-page-btn"]`,
-		TextLicense:               `document.querySelector("#main-content > div > div > div > ion-content > div.license-detail-content > ion-grid.license-detail-portal-content.license-detail-portal-content__bottom-grid.md.hydrated > ion-row > ion-col:nth-child(1) > div > div > div > div > ion-grid:nth-child(1) > ion-row:nth-child(2) > ion-col:nth-child(6) > div > div.DetailInfoSectionItem__value > p")`,
+		TextLicense:               `document.querySelector("#main-content > div > div > div > ion-content > div.license-detail-content > ion-grid.license-detail-portal-content.license-detail-portal-content__bottom-grid.md.hydrated > ion-row > ion-col:nth-child(1) > div > div > div > div > div:nth-child(1) > div:nth-child(2) > div:nth-child(6) > div > div > p")`,
 
 	}
 

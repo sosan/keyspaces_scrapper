@@ -6,10 +6,9 @@
         "request": "launch",
         "mode": "debug",
         "program": "main.go",
+        // "-ldflags='-X 'main/update.VersionBuild=${input:shortDate}''"
         "buildFlags": [
-            // "-ldflags='-X 'main/update.VersionBuild=${input:shortDate}''"
-            "-ldflags='-X 'main/update.VersionBuild=2024-02-01T19:18:43Z''"
-            
+            "-ldflags=-X main/update.VersionBuild=2024-02-01T19:18:43Z"
         ],
     }   
     ],

@@ -9,33 +9,33 @@ type Token struct {
 }
 
 type PostData struct {
-	UriValue                  string
-	EmailValue                string
-	PasswordValue             string
-	SelectedCountryValue      string
-	WantReceiveNewsValue      string
-	WaitVisibleValue          string
-	EmailElement              string
-	PasswordElement           string
-	SelectedCountryElement    string
-	WantReceiveNewsElement    string
-	SubmitElement             string
-	ScreenshotElement         string
-	ButtonStart               string
-	ButtonTrial               string
-	ButtonTrialContinue       string
-	ButtonHome                string
-	ButtonHomeContinue        string
-	ButtonFreeLicense         string
-	ButtonContinueFreeLicense string
-	ButtonDetails             string
-	ButtonDetailsContinue string
-	ButtonContinue            string
-	ButtonContinueSelectOS    string
-	EmailToShare              string
-	ButtonToSendEmailShare    string
-	ButtonShowLicense         string
-	TextLicense               string
+	UriValue                    string
+	EmailValue                  string
+	PasswordValue               string
+	SelectedCountryValue        string
+	WantReceiveNewsValue        string
+	WaitVisibleValue            string
+	EmailElement                string
+	PasswordElement             string
+	SelectedCountryElement      string
+	WantReceiveNewsElement      string
+	SubmitElement               string
+	ScreenshotElement           string
+	ButtonStart                 string
+	ButtonTrial                 string
+	ButtonTrialContinue         string
+	ButtonSelectVersion         string
+	ButtonSelectVersionContinue string
+	ButtonFreeLicense           string
+	ButtonContinueFreeLicense   string
+	ButtonDetails               string
+	ButtonDetailsContinue       string
+	ButtonContinue              string
+	ButtonContinueSelectOS      string
+	EmailToShare                string
+	ButtonToSendEmailShare      string
+	ButtonShowLicense           string
+	TextLicense                 string
 }
 
 type ResumenEmail struct {

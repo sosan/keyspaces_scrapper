@@ -119,28 +119,27 @@ func sendChromeConfirm(email string) (bool, string) {
 	defer cancel()
 	// use copyselector in devtools chromium
 	postData := models.PostData{
-		UriValue:                  "https://home.eset.com",
-		WaitVisibleValue:          "#root",
-		EmailElement:              "#email",
-		EmailValue:                email,
-		PasswordElement:           "#password",
-		PasswordValue:             PASSWORD_DEFAULT,
-		SubmitElement:             `button[type="submit"]`,
-		ButtonStart:               `[data-label="home-overview-empty-add-license-btn"]`,
-		ButtonTrial:               `[data-label="license-fork-slide-trial-license-card-button"]`,
-		ButtonTrialContinue:       `[data-label="license-fork-slide-continue-button"]`,
-		ButtonHome:                `[data-label="subscription-choose-trial-ehsp-card-button"]`,
-		ButtonHomeContinue:        `document.querySelector("#main-content > div > div > div > ion-content > div > div > div > div > div > div > div > div > button")`,
-		ButtonFreeLicense:         `#license-add-new-slides > div > ion-slide.LicenseForkSlide.md.swiper-slide.swiper-zoom-container.hydrated.swiper-slide-active > div > div > div:nth-child(3) > div > button`,
-		ButtonContinueFreeLicense: `[data-label="license-fork-slide-continue-button"]`,
-		ButtonDetails:             `[data-label="subscription-choose-trial-esbs-card-button"]`,
-		ButtonDetailsContinue:     `[data-label="subscription-choose-trial-continue-btn"]`,
-		ButtonContinueSelectOS:    `[data-label="device-protect-choose-platform-continue-btn"]`,
-		EmailToShare:              `[data-label="device-protect-get-installer-email-input-input"]`,
-		ButtonToSendEmailShare:    `[data-label="device-protect-get-installer-send-email-btn"]`,
-		ButtonShowLicense:         `[data-label="license-list-open-detail-page-btn"]`,
-		TextLicense:               `document.querySelector("#main-content > div > div > div > ion-content > div.license-detail-content > ion-grid.license-detail-portal-content.license-detail-portal-content__bottom-grid.md.hydrated > ion-row > ion-col:nth-child(1) > div > div > div > div > div:nth-child(1) > div:nth-child(2) > div:nth-child(6) > div > div > p")`,
-
+		UriValue:            "https://home.eset.com",
+		WaitVisibleValue:    "#root",
+		EmailElement:        "#email",
+		EmailValue:          email,
+		PasswordElement:     "#password",
+		PasswordValue:       PASSWORD_DEFAULT,
+		SubmitElement:       `button[type="submit"]`,
+		ButtonStart:         `[data-label="home-overview-empty-add-license-btn"]`,
+		ButtonTrial:         `[data-label="license-fork-slide-trial-license-card-button"]`,
+		ButtonTrialContinue: `[data-label="license-fork-slide-continue-button"]`,
+		ButtonSelectVersion: `[data-label="subscription-choose-trial-ehsp-card-button"]`,
+		ButtonSelectVersionContinue: `document.querySelector("#main-content > div > div > div > main > div > div > div > div > div > div > div > button")`,
+		ButtonFreeLicense:           `#license-add-new-slides > div > ion-slide.LicenseForkSlide.md.swiper-slide.swiper-zoom-container.hydrated.swiper-slide-active > div > div > div:nth-child(3) > div > button`,
+		ButtonContinueFreeLicense:   `[data-label="license-fork-slide-continue-button"]`,
+		ButtonDetails:               `[data-label="subscription-choose-trial-esbs-card-button"]`,
+		ButtonDetailsContinue:       `[data-label="subscription-choose-trial-continue-btn"]`,
+		ButtonContinueSelectOS:      `[data-label="device-protect-choose-platform-continue-btn"]`,
+		EmailToShare:                `[data-label="device-protect-get-installer-email-input-input"]`,
+		ButtonToSendEmailShare:      `[data-label="device-protect-get-installer-send-email-btn"]`,
+		ButtonShowLicense:           `[data-label="license-list-open-detail-page-btn"]`,
+		TextLicense:                 `[data-label="license-detail-license-key"]`,
 	}
 
 	var buf []byte
@@ -183,8 +182,8 @@ func submitConfirmAccount(postData models.PostData, buf *[]byte, licencia *strin
 
 		chromedp.Sleep(5 * time.Second),
 
-		chromedp.Click(postData.ButtonHome, chromedp.ByQuery),
-		chromedp.Click(postData.ButtonHomeContinue, chromedp.ByJSPath),
+		chromedp.Click(postData.ButtonSelectVersion, chromedp.ByQuery),
+		chromedp.Click(postData.ButtonSelectVersionContinue, chromedp.ByJSPath),
 
 		chromedp.Sleep(10 * time.Second),
 
@@ -198,7 +197,7 @@ func submitConfirmAccount(postData models.PostData, buf *[]byte, licencia *strin
 		chromedp.Click(postData.ButtonDetails, chromedp.ByQuery),
 		chromedp.Click(postData.ButtonDetailsContinue, chromedp.ByQuery),
 
-		chromedp.Sleep(3 * time.Second),
+		chromedp.Sleep(5 * time.Second),
 		// chromedp.Click(postData.ButtonContinueSelectOS, chromedp.ByQuery),
 
 		// envio key al email
@@ -213,7 +212,7 @@ func submitConfirmAccount(postData models.PostData, buf *[]byte, licencia *strin
 		// chromedp.Sleep(1 * time.Second),
 
 		// chromedp.Click(postData.ButtonShowLicense, chromedp.ByQuery),
-		chromedp.Text(postData.TextLicense, licencia, chromedp.ByJSPath),
+		chromedp.Text(postData.TextLicense, licencia, chromedp.ByQuery),
 	}
 
 	return tasks

@@ -1,14 +1,13 @@
 module main
 
 go 1.23
-
-toolchain go1.23.3
+toolchain go1.24.1
 
 require github.com/chromedp/chromedp v0.11.2
 
 require (
 	aead.dev/minisign v0.3.0 // indirect
-	golang.org/x/crypto v0.32.0 // indirect
+	golang.org/x/crypto v0.35.0 // indirect
 )
 
 require (
@@ -22,5 +21,5 @@ require (
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/mailru/easyjson v0.9.0 // indirect
 	github.com/minio/selfupdate v0.6.0
-	golang.org/x/sys v0.29.0 // indirect
+	golang.org/x/sys v0.30.0 // indirect
 )

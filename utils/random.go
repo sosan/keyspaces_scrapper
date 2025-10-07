@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
-	"math/rand"
+	// "math/rand"
 
 	"main/httpclient"
 	"main/models"
@@ -14,7 +14,7 @@ import (
 
 func GenerateRandomEmail() string {
 
-	firstPart := rand.Int()
+	// firstPart := rand.Int()
 	secondPart := uuid.New()
 	domain, statusCode := getDomains()
 
@@ -22,7 +22,7 @@ func GenerateRandomEmail() string {
 		log.Panic("NO ES POSIBLE OBTENER LA URLS DE DOMINIOS")
 	}
 
-	email := fmt.Sprintf("%d-%s@%s", firstPart, secondPart.String(), domain ) 
+	email := fmt.Sprintf("%s@%s", secondPart.String(), domain ) 
 	
 	return email
 

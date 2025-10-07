@@ -130,7 +130,7 @@ func sendChromeConfirm(email string) (bool, string) {
 		ButtonTrial:         `[data-label="license-fork-slide-trial-license-card-button"]`,
 		ButtonTrialContinue: `[data-label="license-fork-slide-continue-button"]`,
 		ButtonSelectVersion: `[data-label="subscription-choose-trial-ehsp-card-button"]`,
-		ButtonSelectVersionContinue: `document.querySelector("#main-content > div > div > div > main > div > div > div > div > div > div > div > button")`,
+		ButtonSelectVersionContinue: `document.querySelector("#main-content > div > div > div > main > div > div > div > div > div > div > div > div > div > div:nth-child(2) > button")`,
 		ButtonFreeLicense:           `#license-add-new-slides > div > ion-slide.LicenseForkSlide.md.swiper-slide.swiper-zoom-container.hydrated.swiper-slide-active > div > div > div:nth-child(3) > div > button`,
 		ButtonContinueFreeLicense:   `[data-label="license-fork-slide-continue-button"]`,
 		ButtonDetails:               `[data-label="subscription-choose-trial-esbs-card-button"]`,
@@ -160,15 +160,16 @@ func sendChromeConfirm(email string) (bool, string) {
 }
 
 func submitConfirmAccount(postData models.PostData, buf *[]byte, licencia *string) chromedp.Tasks {
-
 	tasks := chromedp.Tasks{
 		chromedp.Navigate(postData.UriValue),
 		chromedp.WaitVisible(postData.WaitVisibleValue, chromedp.ByQuery),
+		chromedp.Click("cc-accept", chromedp.ByID),
 
 		// enviar formulario login
 		chromedp.SendKeys(postData.EmailElement, postData.EmailValue, chromedp.ByID),
+		chromedp.Sleep(2 * time.Second),
 		chromedp.SendKeys(postData.PasswordElement, postData.PasswordValue, chromedp.ByID),
-		chromedp.Click("cc-accept", chromedp.ByID),
+		chromedp.Sleep(2 * time.Second),
 		chromedp.Click(postData.SubmitElement, chromedp.BySearch),
 		chromedp.WaitVisible(postData.ButtonStart, chromedp.ByQuery),
 

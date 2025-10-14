@@ -156,6 +156,7 @@ jobs:
 
   upload-artifact:
     name: Upload ${{ matrix.goos }} artifacts
+    # Solo ejecutar si TODOS los tests y scans pasan
     # needs: [test-unit, test-integration, scan-image]
     runs-on: ubuntu-22.04
     permissions:
@@ -173,6 +174,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Go
         uses: actions/setup-go@v5
@@ -180,13 +183,25 @@ jobs:
           go-version-file: 'go.mod'
           cache: true
 
+      - name: Generate version
+        id: version
+        run: |
+          COMMIT_COUNT=$(git rev-list --count HEAD)
+          SHORT_SHA=$(git rev-parse --short HEAD)
+          VERSION="v0.1.${COMMIT_COUNT}"
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+          echo "short_sha=${SHORT_SHA}" >> $GITHUB_OUTPUT
+          echo "Generated version: ${VERSION}"
+
       - name: Build binary
         run: |
           export VERSION_BUILD=$(date -u "+%Y-%m-%dT%H:%M:%SZ")
           export VERSION_COMMIT=${{ github.sha }}
+          export VERSION=${{ steps.version.outputs.version }}
           echo "${VERSION_BUILD}" > date_build_${{ matrix.artifact_name }}.txt
+          echo "${VERSION}" > version_${{ matrix.artifact_name }}.txt
           CGO_ENABLED=0 GOOS=${{ matrix.goos }} GOARCH=${{ matrix.goarch }} go build \
-            -ldflags="-X 'main/update.VersionBuild=${VERSION_BUILD}' -X 'main/update.VersionCommit=${VERSION_COMMIT}' -s -w" \
+            -ldflags="-X 'main/update.VersionBuild=${VERSION_BUILD}' -X 'main/update.VersionCommit=${VERSION_COMMIT}' -X 'main/update.Version=${VERSION}' -s -w" \
             -trimpath \
             -o ${{ matrix.artifact_name }}
 
@@ -194,24 +209,109 @@ jobs:
         run: |
           shasum -a 256 ${{ matrix.artifact_name }} | cut -d' ' -f1 > checksum_${{ matrix.artifact_name }}.txt
 
-      - name: Upload binaries to release
+      - name: Create versioned release
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: softprops/action-gh-release@v2
         with:
-          name: "Release ${{ github.sha }}"
+          name: "Release ${{ steps.version.outputs.version }}"
           body: |
-            **Build:** ${{ github.run_number }}
-            **Commit:** ${{ github.sha }}
-            **Date:** $(date -u "+%Y-%m-%d %H:%M:%S UTC")
+            ## Release ${{ steps.version.outputs.version }}
+            
+            **Build:** #${{ github.run_number }}
+            **Commit:** [${{ steps.version.outputs.short_sha }}](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})
+            **Branch:** ${{ github.ref_name }}
+            **Date:** ${{ github.event.head_commit.timestamp }}
+            
+            ### Changes
+            ```
+            ${{ github.event.head_commit.message }}
+            ```
+            
+            ### Downloads
+            - `licencias` - Linux AMD64
+            - `licencias.exe` - Windows AMD64
+            
+            ### Verification
+            Verify checksums:
+            ```bash
+            # Linux
+            echo "$(cat checksum_licencias.txt)  licencias" | shasum -a 256 -c
+            
+            # Windows (PowerShell)
+            $hash = (Get-FileHash licencias.exe -Algorithm SHA256).Hash.ToLower()
+            $expected = Get-Content checksum_licencias.exe.txt
+            if ($hash -eq $expected) { Write-Host "✓ Checksum OK" } else { Write-Host "✗ Checksum FAILED" }
+            ```
+            
+            ---
+            📦 **Quick download:** Use the `latest` tag for automatic updates
           draft: false
           prerelease: false
-          tag_name: latest
+          tag_name: ${{ steps.version.outputs.version }}
+          make_latest: true
           files: |
             ${{ matrix.artifact_name }}
             date_build_${{ matrix.artifact_name }}.txt
+            version_${{ matrix.artifact_name }}.txt
             checksum_${{ matrix.artifact_name }}.txt
 
-  # Job opcional: limpiar imágenes antiguas
+      - name: Update latest release
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "Latest Release"
+          body: |
+            ## 🚀 Latest Stable Build
+            
+            This release is automatically updated with each successful build from the `main` branch.
+            
+            **Current Version:** ${{ steps.version.outputs.version }}
+            **Build:** #${{ github.run_number }}
+            **Commit:** [${{ steps.version.outputs.short_sha }}](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})
+            **Date:** ${{ github.event.head_commit.timestamp }}
+            
+            ### 📥 Quick Download
+            
+            **Linux:**
+            ```bash
+            # Download
+            curl -L -o licencias https://github.com/${{ github.repository }}/releases/download/latest/licencias
+            chmod +x licencias
+            
+            # Verify checksum
+            curl -L -o checksum.txt https://github.com/${{ github.repository }}/releases/download/latest/checksum_licencias.txt
+            echo "$(cat checksum.txt)  licencias" | shasum -a 256 -c
+            ```
+            
+            **Windows (PowerShell):**
+            ```powershell
+            # Download
+            Invoke-WebRequest -Uri "https://github.com/${{ github.repository }}/releases/download/latest/licencias.exe" -OutFile "licencias.exe"
+            
+            # Verify checksum
+            Invoke-WebRequest -Uri "https://github.com/${{ github.repository }}/releases/download/latest/checksum_licencias.exe.txt" -OutFile "checksum.txt"
+            $hash = (Get-FileHash licencias.exe -Algorithm SHA256).Hash.ToLower()
+            $expected = Get-Content checksum.txt
+            if ($hash -eq $expected) { Write-Host "✓ Checksum OK" -ForegroundColor Green } else { Write-Host "✗ Checksum FAILED" -ForegroundColor Red }
+            ```
+            
+            ### 📋 Latest Changes
+            ```
+            ${{ github.event.head_commit.message }}
+            ```
+            
+            ---
+            💡 **Tip:** For production use, download a specific version from the [releases page](${{ github.server_url }}/${{ github.repository }}/releases) instead of using `latest`.
+          draft: false
+          prerelease: false
+          tag_name: latest
+          make_latest: false
+          files: |
+            ${{ matrix.artifact_name }}
+            date_build_${{ matrix.artifact_name }}.txt
+            version_${{ matrix.artifact_name }}.txt
+            checksum_${{ matrix.artifact_name }}.txt
+
   cleanup-old-images:
     name: Cleanup old test images
     needs: [upload-artifact]
@@ -227,3 +327,5 @@ jobs:
           package-type: container
           min-versions-to-keep: 10
           delete-only-untagged-versions: true
+
+

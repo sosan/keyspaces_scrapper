@@ -41,7 +41,7 @@ func main() {
 
 	log.Printf("Cuenta registrada en ESET")
 	emailsCanBeObtened, emails := email.GetAllEmails(emailGenerated)
-
+	log.Printf("Emails %d %v", len(emails), emailsCanBeObtened)
 	if !emailsCanBeObtened {
 		return
 	}
@@ -53,6 +53,7 @@ func main() {
 	// obtenemos el ultimo email
 	emailObtened, emailComplete := email.GetEmailById(emails[0].ID, emailGenerated)
 	if !emailObtened {
+		log.Printf("No ha sido posbile obtener el correo %v", emailComplete)
 		return
 	}
 

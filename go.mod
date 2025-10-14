@@ -1,15 +1,13 @@
 module main
 
-go 1.24.0
+go 1.25.3
 
-toolchain go1.24.1
-
-require github.com/chromedp/chromedp v0.14.1
+require github.com/chromedp/chromedp v0.14.2
 
 require (
 	aead.dev/minisign v0.3.0 // indirect
-	github.com/go-json-experiment/json v0.0.0-20250725192818-e39067aee2d2 // indirect
-	golang.org/x/crypto v0.42.0 // indirect
+	github.com/go-json-experiment/json v0.0.0-20250910080747-cc2cfa0554c3 // indirect
+	golang.org/x/crypto v0.43.0 // indirect
 )
 
 require (
@@ -21,5 +19,5 @@ require (
 	github.com/google/uuid v1.6.0
 	github.com/joho/godotenv v1.5.1
 	github.com/minio/selfupdate v0.6.0
-	golang.org/x/sys v0.36.0 // indirect
+	golang.org/x/sys v0.37.0 // indirect
 )
